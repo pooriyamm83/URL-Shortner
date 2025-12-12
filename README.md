@@ -1,3 +1,5 @@
+Bash
+
 🚀 URL Shortener API
 
 This is a fast and simple URL Shortener API built with FastAPI and SQLAlchemy. It uses Base62 encoding to generate short, unique codes for long URLs and includes automatic cleanup for expired links.
@@ -119,3 +121,4 @@ models/url.py: SQLAlchemy declarative base model for the URL table.
 utils.py: Contains the Base62 encoding and URL validation utility functions.
 
 schemas/url_schema.py: Pydantic models for request/response validation and structure.
+
