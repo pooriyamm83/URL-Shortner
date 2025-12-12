@@ -33,7 +33,17 @@ def get_url_service(db: Session = Depends(get_db)) -> URLService:
 def create_url():
     return
 
-# Define router get/U Morteza
+# Define router get/U Poorya
+@router.get("/u/{short_code}", status_code=status.HTTP_302_FOUND)
+# Method
+def redirect_url(short_code: str, service: URLService = Depends(get_url_service)):
+    try:
+        original = service.get_original_url(short_code)
+        return RedirectResponse(original)
+    except HTTPException as e:
+        return APIResponse(status="failure", message=e.detail), e.status_code
+
+# Define router get/urls Morteza
 # Fill
 # Method
 def get_all_urls():
