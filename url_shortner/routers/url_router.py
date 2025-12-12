@@ -50,7 +50,7 @@ def get_all_urls():
     return
 
 # Define router delete/urls Poorya
-# Fill
+@router.delete("/urls/{short_code}")
 # Method
 def delete_url(short_code: str, service: URLService = Depends(get_url_service)):
     try:
