@@ -52,5 +52,9 @@ def get_all_urls():
 # Define router delete/urls Poorya
 # Fill
 # Method
-def delete_url():
-    return
+def delete_url(short_code: str, service: URLService = Depends(get_url_service)):
+    try:
+        service.delete_url(short_code)
+        return APIResponse(status="success", message="URL deleted successfully"), status.HTTP_204_NO_CONTENT
+    except HTTPException as e:
+        return APIResponse(status="failure", message=e.detail), e.status_code  # to get real 404 error code "raise e"
