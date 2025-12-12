@@ -21,16 +21,20 @@ class URLService:
         return url  # Update with short_code
 
     # Poorya
-    def get_original_url(self):
-        return
+    def get_original_url(self, short_code: str) -> str:
+        url = self.repo.get_by_short_code(short_code)
+        if not url:
+            raise HTTPException(status_code=404, detail="URL not found")
+        return url.original_url
 
     # Morteza
     def get_all_urls(self) -> list[URL]:
         return self.repo.get_all()
 
     # Poorya
-    def delete_url(self):
-        return
+    def delete_url(self, short_code: str):
+        if not self.repo.delete(short_code):
+            raise HTTPException(status_code=404, detail="URL not found")
 
 
     # Bonus later

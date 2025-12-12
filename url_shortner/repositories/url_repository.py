@@ -14,8 +14,9 @@ class URLRepository:
         return url
 
     # Poorya
-    def get_by_short_code(self):
-        return
+    def get_by_short_code(self, short_code: str) -> URL | None:
+        stmt = select(URL).where(URL.short_code == short_code)
+        return self.db.scalar(stmt)
 
     # Morteza
     def get_all(self) -> list[URL]:
@@ -23,7 +24,10 @@ class URLRepository:
         return self.db.scalars(stmt).all()
 
     # Poorya
-    def delete(self):
-        return
+    def delete(self, short_code: str) -> bool:
+        stmt = delete(URL).where(URL.short_code == short_code)
+        result = self.db.execute(stmt)
+        self.db.commit()
+        return result.rowcount > 0
 
     # Bonus later

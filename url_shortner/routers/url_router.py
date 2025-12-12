@@ -30,6 +30,15 @@ def get_url_service(db: Session = Depends(get_db)) -> URLService:
 # Define router post/urls Morteza
 # Fill
 # Method
+# Define router get/U Poorya
+@router.get("/u/{short_code}", status_code=status.HTTP_302_FOUND)
+# Method
+def redirect_url(short_code: str, service: URLService = Depends(get_url_service)):
+    try:
+        original = service.get_original_url(short_code)
+        return RedirectResponse(original)
+    except HTTPException as e:
+        return APIResponse(status="failure", message=e.detail), e.status_code
 @router.post("/urls", status_code=status.HTTP_201_CREATED)
 def create_url(url: URLCreate, service: URLService = Depends(get_url_service)):
     try:
@@ -53,7 +62,11 @@ def get_all_urls(service: URLService = Depends(get_url_service)):
         raise HTTPException(status_code=500, detail="Internal server error")
 
 # Define router delete/urls Poorya
-# Fill
+@router.delete("/urls/{short_code}")
 # Method
-def delete_url():
-    return
+def delete_url(short_code: str, service: URLService = Depends(get_url_service)):
+    try:
+        service.delete_url(short_code)
+        return APIResponse(status="success", message="URL deleted successfully"), status.HTTP_204_NO_CONTENT
+    except HTTPException as e:
+        return APIResponse(status="failure", message=e.detail), e.status_code  # to get real 404 error code "raise e"
