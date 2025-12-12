@@ -7,15 +7,19 @@ class URLService:
     def __init__(self, repo: URLRepository):
         self.repo = repo
 
+    # Morteza
     def create_short_url(self):
         return
 
+    # Poorya
     def get_original_url(self):
         return
 
+    # Morteza
     def get_all_urls(self):
         return
 
+    # Poorya
     def delete_url(self):
         return
 

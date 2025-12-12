@@ -27,19 +27,19 @@ def get_url_service(db: Session = Depends(get_db)) -> URLService:
     repo = URLRepository(db)
     return URLService(repo)
 
-# Define router post/urls
+# Define router post/urls Morteza
 # Fill
 # Method
 def create_url():
     return
 
-# Define router get/U
+# Define router get/U Morteza
 # Fill
 # Method
 def get_all_urls():
     return
 
-# Define router delete/urls
+# Define router delete/urls Poorya
 # Fill
 # Method
 def delete_url():
