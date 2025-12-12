@@ -12,8 +12,11 @@ class URLService:
         return
 
     # Poorya
-    def get_original_url(self):
-        return
+    def get_original_url(self, short_code: str) -> str:
+        url = self.repo.get_by_short_code(short_code)
+        if not url:
+            raise HTTPException(status_code=404, detail="URL not found")
+        return url.original_url
 
     # Morteza
     def get_all_urls(self):
