@@ -7,8 +7,11 @@ class URLRepository:
         self.db = db
 
     # Morteza
-    def create(self):
-        return
+    def create(self, url: URL) -> URL:
+        self.db.add(url)
+        self.db.commit()
+        self.db.refresh(url)
+        return url
 
     # Poorya
     def get_by_short_code(self, short_code: str) -> URL | None:
@@ -16,8 +19,9 @@ class URLRepository:
         return self.db.scalar(stmt)
 
     # Morteza
-    def get_all(self):
-        return
+    def get_all(self) -> list[URL]:
+        stmt = select(URL)
+        return self.db.scalars(stmt).all()
 
     # Poorya
     def delete(self, short_code: str) -> bool:

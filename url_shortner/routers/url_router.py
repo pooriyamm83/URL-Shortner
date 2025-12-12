@@ -30,9 +30,6 @@ def get_url_service(db: Session = Depends(get_db)) -> URLService:
 # Define router post/urls Morteza
 # Fill
 # Method
-def create_url():
-    return
-
 # Define router get/U Poorya
 @router.get("/u/{short_code}", status_code=status.HTTP_302_FOUND)
 # Method
@@ -42,12 +39,27 @@ def redirect_url(short_code: str, service: URLService = Depends(get_url_service)
         return RedirectResponse(original)
     except HTTPException as e:
         return APIResponse(status="failure", message=e.detail), e.status_code
+@router.post("/urls", status_code=status.HTTP_201_CREATED)
+def create_url(url: URLCreate, service: URLService = Depends(get_url_service)):
+    try:
+        new_url = service.create_short_url(str(url.original_url))
+        return APIResponse(status="success", data=URLResponse.from_orm(new_url).dict())
+    except HTTPException as e:
+        return APIResponse(status="failure", message=e.detail), e.status_code
+    except Exception:
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 # Define router get/urls Morteza
 # Fill
 # Method
-def get_all_urls():
-    return
+@router.get("/urls")
+def get_all_urls(service: URLService = Depends(get_url_service)):
+    try:
+        urls = service.get_all_urls()
+        data = [URLResponse.from_orm(u).dict() for u in urls]
+        return APIResponse(status="success", data=data)
+    except Exception:
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 # Define router delete/urls Poorya
 @router.delete("/urls/{short_code}")
