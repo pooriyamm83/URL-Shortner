@@ -23,8 +23,9 @@ class URLService:
         return
 
     # Poorya
-    def delete_url(self):
-        return
+    def delete_url(self, short_code: str):
+        if not self.repo.delete(short_code):
+            raise HTTPException(status_code=404, detail="URL not found")
 
 
     # Bonus later
