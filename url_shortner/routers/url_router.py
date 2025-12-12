@@ -43,8 +43,14 @@ def create_url(url: URLCreate, service: URLService = Depends(get_url_service)):
 # Define router get/U Morteza
 # Fill
 # Method
-def get_all_urls():
-    return
+@router.get("/urls")
+def get_all_urls(service: URLService = Depends(get_url_service)):
+    try:
+        urls = service.get_all_urls()
+        data = [URLResponse.from_orm(u).dict() for u in urls]
+        return APIResponse(status="success", data=data)
+    except Exception:
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 # Define router delete/urls Poorya
 # Fill
