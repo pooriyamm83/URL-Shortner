@@ -1,6 +1,8 @@
 from sqlalchemy import select, delete
 from sqlalchemy.orm import Session
 from url_shortner.models.url import URL
+from datetime import datetime, timedelta
+from url_shortner.config import APP_TTL_MINUTES
 
 class URLRepository:
     def __init__(self, db: Session):
@@ -31,3 +33,9 @@ class URLRepository:
         return result.rowcount > 0
 
     # Bonus later
+    def delete_expired(self) -> int:
+        expiration_time = datetime.utcnow() - timedelta(minutes=APP_TTL_MINUTES)
+        stmt = delete(URL).where(URL.created_at < expiration_time)
+        result = self.db.execute(stmt)
+        self.db.commit()
+        return result.rowcount
