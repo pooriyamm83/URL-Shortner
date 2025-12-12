@@ -10,6 +10,9 @@ class URLResponse(BaseModel):
     short_code: str
     created_at: datetime
 
+    class Config:
+        from_attributes = True
+
 class URLListResponse(BaseModel):
     data: list[URLResponse]
 
