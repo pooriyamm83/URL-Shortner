@@ -25,8 +25,8 @@ class URLService:
         return
 
     # Morteza
-    def get_all_urls(self):
-        return
+    def get_all_urls(self) -> list[URL]:
+        return self.repo.get_all()
 
     # Poorya
     def delete_url(self):
