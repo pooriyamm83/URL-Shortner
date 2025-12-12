@@ -20,7 +20,10 @@ class URLRepository:
         return
 
     # Poorya
-    def delete(self):
-        return
+    def delete(self, short_code: str) -> bool:
+        stmt = delete(URL).where(URL.short_code == short_code)
+        result = self.db.execute(stmt)
+        self.db.commit()
+        return result.rowcount > 0
 
     # Bonus later
