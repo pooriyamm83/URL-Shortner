@@ -35,7 +35,6 @@ class URLRepository:
     # Bonus later
     def delete_expired(self) -> int:
         expiration_time = datetime.utcnow() - timedelta(minutes=APP_TTL_MINUTES)
-        stmt = delete(URL).where(URL.created_at < expiration_time)
-        result = self.db.execute(stmt)
+        result = self.db.query(URL).filter(URL.created_at < expiration_time).delete()
         self.db.commit()
-        return result.rowcount
+        return result
