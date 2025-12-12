@@ -7,8 +7,11 @@ class URLRepository:
         self.db = db
 
     # Morteza
-    def create(self):
-        return
+    def create(self, url: URL) -> URL:
+        self.db.add(url)
+        self.db.commit()
+        self.db.refresh(url)
+        return url
 
     # Poorya
     def get_by_short_code(self):
