@@ -18,8 +18,9 @@ class URLRepository:
         return
 
     # Morteza
-    def get_all(self):
-        return
+    def get_all(self) -> list[URL]:
+        stmt = select(URL)
+        return self.db.scalars(stmt).all()
 
     # Poorya
     def delete(self):
