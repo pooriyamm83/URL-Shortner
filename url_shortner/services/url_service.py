@@ -38,3 +38,5 @@ class URLService:
 
 
     # Bonus later
+    def delete_expired_urls(self) -> int:
+        return self.repo.delete_expired()
