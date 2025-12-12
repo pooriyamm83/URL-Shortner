@@ -11,8 +11,9 @@ class URLRepository:
         return
 
     # Poorya
-    def get_by_short_code(self):
-        return
+    def get_by_short_code(self, short_code: str) -> URL | None:
+        stmt = select(URL).where(URL.short_code == short_code)
+        return self.db.scalar(stmt)
 
     # Morteza
     def get_all(self):
