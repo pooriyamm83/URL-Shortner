@@ -39,8 +39,7 @@ pip install fastapi uvicorn sqlalchemy alembic python-dotenv pydantic validators
 Create a file named .env in the root directory of the project. This is used by config.py to load configuration values.
 
 # .env file content
-DATABASE_URL="sqlite:///./shortener.db"
-# Example for PostgreSQL: postgresql+psycopg2://user:password@host:port/dbname
+Example for PostgreSQL: postgresql+psycopg2://user:password@host:port/dbname
 
 # Time-To-Live for URLs in minutes (1440 minutes = 24 hours)
 APP_TTL_MINUTES=1440
@@ -99,8 +98,8 @@ All incoming URLs are validated using the validators.url function before creatio
 
 The URLRepository includes a method, delete_expired, which calculates the expiration time based on APP_TTL_MINUTES from the configuration and deletes records where created_at is older than this time. This is typically run via a scheduled task (e.g., a background job or cron job, as suggested by the import in main.py: from commands.cleanup import scheduler).
 
-$$\text{Expiration Time} = \text{Current Time} - \text{timedelta}(\text{minutes}=\text{APP\_TTL\_MINUTES})$$
-📚 Project Structure (Conceptual)
+
+# 📚 Project Structure (Conceptual)
 
 The project follows a Service/Repository pattern to separate business logic from data access.
 
@@ -119,5 +118,6 @@ models/url.py: SQLAlchemy declarative base model for the URL table.
 utils.py: Contains the Base62 encoding and URL validation utility functions.
 
 schemas/url_schema.py: Pydantic models for request/response validation and structure.
+
 
 
