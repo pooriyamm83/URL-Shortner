@@ -40,7 +40,7 @@ def create_url(url: URLCreate, service: URLService = Depends(get_url_service)):
     except Exception:
         raise HTTPException(status_code=500, detail="Internal server error")
 
-# Define router get/U Morteza
+# Define router get/urls Morteza
 # Fill
 # Method
 @router.get("/urls")
