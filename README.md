@@ -70,12 +70,16 @@ Function : delete_expired()
 
 You must write a Command that removes expired links (created_at + TTL < now()).
 
-Here, write:
+Inorder to remove expired links we can run this command in the terminal:
 
-Detail	Value
-Full file path of the command	commands/cleanup.py (Inferred from main.py import)
-Command name / execution method	The function that calls URLService.delete_expired_urls()
-Scheduler details	The scheduler is imported in main.py, indicating a background process (e.g., APScheduler) runs a job to call the cleanup command periodically.
+```env
+python commands/cleanup.py
+```
+
+It basically deletes all urls where :
+```env
+URL.created_at < expiration_time
+```
 
 ---
 
@@ -122,6 +126,7 @@ Filenames must clearly show:
 - HTTP status
 
 - Success or error
+
 
 
 
