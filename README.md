@@ -1,123 +1,118 @@
-# 🚀 URL Shortener API
+# 🚀 URL Shortener API (Mid-Term Final Checklist)
 
-This is a fast and simple URL Shortener API built with FastAPI and SQLAlchemy. It uses Base62 encoding to generate short, unique codes for long URLs and includes automatic cleanup for expired links.
+#Project Members
 
-📋 Prerequisites
+Pooriya Morajab implemented : Redirect, Delete, TTL, Cleanup
+Morteza Maddah implemented : Create short links, List shortened Links
 
-To run this project, you need:
+1. API Test Coverage Table
 
-Python 3.9+
+Fill in the second column with the name of the student who implemented
 
-A PostgreSQL, SQLite, or other SQLAlchemy-compatible database.
+and tested each API.
 
-⚙️ Setup and Installation
+| # | API Endpoint / Feature | Implemented & Tested By (Student Name) |
 
-Follow these steps to get your development environment set up.
+|---|------------------------|-----------------------------------------|
 
-1. Clone the Repository (Assuming this is a project)
+| 1 | Create Short Link - POST /urls | Morteza |
 
-Bash
+| 2 | Redirect to Original URL - GET /u/{code} | Pooriya |
 
-git clone <repository_url>
-cd url-shortener-api
-2. Create and Activate a Virtual Environment
+| 3 | Get All Shortened Links - GET /urls | Morteza |
 
-Bash
+| 4 | Delete Short Link - DELETE /urls/{code} | Pooriya |
 
-python -m venv venv
-source venv/bin/activate  # On Linux/macOS
-# .\venv\Scripts\activate  # On Windows
-3. Install Dependencies
+Note: Endpoints were adjusted to match your actual router paths: /urls and /u/{short_code}. Student names are placeholders.
 
-You will need to install fastapi, uvicorn, sqlalchemy, alembic, python-dotenv, and validators.
+2. Code Generation Method 
 
-Bash
+Check the method you used to generate the short code:
 
-pip install fastapi uvicorn sqlalchemy alembic python-dotenv pydantic validators psycopg2-binary # Use a database driver appropriate for your DB
-4. Configure Environment Variables
+[ ] 1. Random Generation
 
-Create a file named .env in the root directory of the project. This is used by config.py to load configuration values.
+[x] 2. ID → Base62 Conversion
 
-# .env file content
-Example for PostgreSQL: postgresql+psycopg2://user:password@host:port/dbname
+[ ] 3. Hash-based Generation
 
-# Time-To-Live for URLs in minutes (1440 minutes = 24 hours)
-APP_TTL_MINUTES=1440
-5. Run Database Migrations (Alembic)
+(Only select the one you actually implemented.)
 
-The project uses Alembic for database migrations.
+Verification: The project uses the ID-based method where the database ID is encoded into a Base62 string using the encode_base62 function.
 
-Make sure your DATABASE_URL is set correctly in .env.
+3. Bonus User Story: TTL (Expiration Time) for Shortened Links)
 
-Initialize the database schema:
+If you implemented the bonus user story, mark the box and complete the
 
-Bash
+required details.
 
-alembic upgrade head
-This will create the urls table in your database, which includes columns for id, original_url, short_code, and created_at.
+[x] TTL Feature Implemented
 
-6. Run the Application
+Verification: The TTL feature is implemented via delete_expired in the URLRepository and exposed via delete_expired_urls in URLService.
 
-Start the FastAPI application using Uvicorn:
+If checked, fill in the following information:
 
-Bash
+ENV variable or config key used:
 
-uvicorn main:app --reload
-The API will now be running, typically at http://127.0.0.1:8000.
+APP_TTL_MINUTES=1
 
-💻 API Endpoints
+Location of TTL Logic (File + Function):
 
-The API is structured around two main functionalities: creating new short links and redirecting from a short link to the original URL.
+File : url_shortner/repositories/url_repository.py 
+Function : delete_expired()
 
-Method	Endpoint	Description	Status Code	Dependencies
-POST	/urls	Creates a new short URL.	201 Created	URLService.create_short_url
-GET	/u/{short_code}	Redirects to the original URL.	302 Found	URLService.get_original_url
-GET	/urls	Retrieves a list of all existing URLs.	200 OK	URLService.get_all_urls
-DELETE	/urls/{short_code}	Deletes a specific URL by its short code.	204 No Content	URLService.delete_url
-💡 Core Functionality Highlights
+How TTL cleanup is triggered:
 
-1. Short Code Generation
+You must write a Command that removes expired links (created_at + TTL < now()).
 
-The system uses the database primary key (id) and encodes it into a shorter Base62 string using the alphabet: 0-9a-zA-Z.
+Here, write:
 
-Process:
+Detail	Value
+Full file path of the command	commands/cleanup.py (Inferred from main.py import)
+Command name / execution method	The function that calls URLService.delete_expired_urls()
+Scheduler details	The scheduler is imported in main.py, indicating a background process (e.g., APScheduler) runs a job to call the cleanup command periodically.
 
-A new URL record is created with a temporary short_code.
+4. Postman Collection (Required)
 
-The auto-generated id is retrieved.
+A Postman Collection has been created and includes all four API routes:
 
-The id is encoded into the final short_code using encode_base62.
+POST /urls 
 
-The record is updated and committed.
+GET /u/{code} 
 
-2. URL Validation
+GET /urls 
 
-All incoming URLs are validated using the validators.url function before creation. If the URL is invalid, an HTTPException with status code 400 is raised.
+DELETE /urls/{code} 
 
-3. Automatic Expiration (Cleanup Command)
+Screenshots (included in GitHub)
 
-The URLRepository includes a method, delete_expired, which calculates the expiration time based on APP_TTL_MINUTES from the configuration and deletes records where created_at is older than this time. This is typically run via a scheduled task (e.g., a background job or cron job, as suggested by the import in main.py: from commands.cleanup import scheduler).
+For each route, two screenshots have been added:
+
+Successful response (2xx)
+
+Error-handled response (4xx)
+
+Screenshots are located in:
+
+/postman
+Naming Example:
+
+postman/
+post-urls-201-success.png
+post-urls-400-invalid-url.png
+get-u-code-307-redirect.png
+get-u-code-404-not-found.png
+get-urls-200-success.png
+delete-urls-code-204-success.png
+delete-urls-code-404-not-found.png
+Filenames must clearly show:
+
+Route
+
+HTTP status
+
+Success or error
 
 
-# 📚 Project Structure (Conceptual)
-
-The project follows a Service/Repository pattern to separate business logic from data access.
-
-main.py: The entry point for the FastAPI application.
-
-config.py: Loads environment variables from .env.
-
-url_router.py: Defines API endpoints and dependency injection for the database session and service.
-
-services/url_service.py: Contains the core business logic (create, get original, delete).
-
-repositories/url_repository.py: Handles direct database operations (CRUD, deletion of expired URLs).
-
-models/url.py: SQLAlchemy declarative base model for the URL table.
-
-utils.py: Contains the Base62 encoding and URL validation utility functions.
-
-schemas/url_schema.py: Pydantic models for request/response validation and structure.
 
 
 
