@@ -1,6 +1,6 @@
 # 🚀 URL Shortener API (Mid-Term Final Checklist)
 
-### Project Members
+## Project Members
 
 Pooriya Morajab implemented : Redirect, Delete, TTL, Cleanup
 
@@ -27,11 +27,11 @@ and tested each API.
 
 Check the method you used to generate the short code:
 
-[ ] 1. Random Generation
+- [ ] 1. Random Generation
 
-[x] 2. ID → Base62 Conversion
+- [x] 2. ID → Base62 Conversion
 
-[ ] 3. Hash-based Generation
+- [ ] 3. Hash-based Generation
 
 (Only select the one you actually implemented.)
 
@@ -45,7 +45,7 @@ If you implemented the bonus user story, mark the box and complete the
 
 required details.
 
-[x] TTL Feature Implemented
+- [x] TTL Feature Implemented
 
 Verification: The TTL feature is implemented via delete_expired in the URLRepository and exposed via delete_expired_urls in URLService.
 
@@ -53,14 +53,20 @@ If checked, fill in the following information:
 
 ENV variable or config key used:
 
+```env
 APP_TTL_MINUTES=1
+```
+---
 
-Location of TTL Logic (File + Function):
+### Location of TTL Logic (File + Function):
 
 File : url_shortner/repositories/url_repository.py 
+
 Function : delete_expired()
 
-How TTL cleanup is triggered:
+---
+
+### How TTL cleanup is triggered:
 
 You must write a Command that removes expired links (created_at + TTL < now()).
 
@@ -77,28 +83,31 @@ Scheduler details	The scheduler is imported in main.py, indicating a background 
 
 A Postman Collection has been created and includes all four API routes:
 
-POST /urls 
+- POST /urls 
+- GET /u/{code} 
+- GET /urls 
+- DELETE /urls/{code} 
 
-GET /u/{code} 
+---
 
-GET /urls 
-
-DELETE /urls/{code} 
-
-Screenshots (included in GitHub)
+### Screenshots (included in GitHub)
 
 For each route, two screenshots have been added:
 
-Successful response (2xx)
-
-Error-handled response (4xx)
+- Successful response (2xx)
+- Error-handled response (4xx)
 
 Screenshots are located in:
 
+```env
 /postman
-Naming Example:
+```
+---
+
+### Naming Example:
 
 postman/
+```env
 post-urls-201-success.png
 post-urls-400-invalid-url.png
 get-u-code-307-redirect.png
@@ -107,12 +116,13 @@ get-urls-200-success.png
 delete-urls-code-204-success.png
 delete-urls-code-404-not-found.png
 Filenames must clearly show:
+```
+- Route
 
-Route
+- HTTP status
 
-HTTP status
+- Success or error
 
-Success or error
 
 
 
