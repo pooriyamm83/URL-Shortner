@@ -14,17 +14,12 @@ Fill in the second column with the name of the student who implemented
 
 and tested each API.
 
-| # | API Endpoint / Feature | Implemented & Tested By (Student Name) |
-
-|---|------------------------|-----------------------------------------|
-
-| 1 | Create Short Link - POST /urls | Morteza |
-
-| 2 | Redirect to Original URL - GET /u/{code} | Pooriya |
-
-| 3 | Get All Shortened Links - GET /urls | Morteza |
-
-| 4 | Delete Short Link - DELETE /urls/{code} | Pooriya |
+| # | API Endpoint / Feature                         | Implemented & Tested By (Student Name) |
+|---|-----------------------------------------------|----------------------------------------|
+| 1 | Create Short Link – POST /urls                 | Morteza                                |
+| 2 | Redirect to Original URL – GET /u/{code}       | Pooriya                                |
+| 3 | Get All Shortened Links – GET /urls            | Morteza                                |
+| 4 | Delete Short Link – DELETE /urls/{code}        | Pooriya                                |
 
 Note: Endpoints were adjusted to match your actual router paths: /urls and /u/{short_code}. Student names are placeholders.
 
@@ -120,6 +115,7 @@ Route
 HTTP status
 
 Success or error
+
 
 
 
