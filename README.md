@@ -21,8 +21,6 @@ and tested each API.
 | 3 | Get All Shortened Links – GET /urls            | Morteza                                |
 | 4 | Delete Short Link – DELETE /urls/{code}        | Pooriya                                |
 
-Note: Endpoints were adjusted to match your actual router paths: /urls and /u/{short_code}. Student names are placeholders.
-
 ---
 
 ## 2. Code Generation Method 
@@ -115,6 +113,7 @@ Route
 HTTP status
 
 Success or error
+
 
 
 
