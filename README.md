@@ -6,7 +6,9 @@ Pooriya Morajab implemented : Redirect, Delete, TTL, Cleanup
 
 Morteza Maddah implemented : Create short links, List shortened Links
 
-# 1. API Test Coverage Table
+---
+
+## 1. API Test Coverage Table
 
 Fill in the second column with the name of the student who implemented
 
@@ -26,7 +28,9 @@ and tested each API.
 
 Note: Endpoints were adjusted to match your actual router paths: /urls and /u/{short_code}. Student names are placeholders.
 
-2. Code Generation Method 
+---
+
+## 2. Code Generation Method 
 
 Check the method you used to generate the short code:
 
@@ -40,7 +44,9 @@ Check the method you used to generate the short code:
 
 Verification: The project uses the ID-based method where the database ID is encoded into a Base62 string using the encode_base62 function.
 
-3. Bonus User Story: TTL (Expiration Time) for Shortened Links)
+---
+
+## 3. Bonus User Story: TTL (Expiration Time) for Shortened Links)
 
 If you implemented the bonus user story, mark the box and complete the
 
@@ -72,7 +78,9 @@ Full file path of the command	commands/cleanup.py (Inferred from main.py import)
 Command name / execution method	The function that calls URLService.delete_expired_urls()
 Scheduler details	The scheduler is imported in main.py, indicating a background process (e.g., APScheduler) runs a job to call the cleanup command periodically.
 
-4. Postman Collection (Required)
+---
+
+## 4. Postman Collection (Required)
 
 A Postman Collection has been created and includes all four API routes:
 
@@ -112,6 +120,7 @@ Route
 HTTP status
 
 Success or error
+
 
 
 
